@@ -1,57 +1,71 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/pure-objects/pureo/master/assets/svg/logo-dark.svg">
-  <img src="https://raw.githubusercontent.com/pure-objects/pureo/master/assets/svg/logo-light.svg" height="56" alt="PureO">
-</picture>
+# Pure Objects
 
-# PureO
+An organization dedicated to one idea: object-oriented programming,
+taken seriously. We build the tools — starting with the PureO
+language — that make object thinking structurally enforceable
+instead of merely encouraged.
 
-**A JVM language where the compiler enforces object thinking.**
+## The problem
 
-Most object-oriented codebases are object-oriented by convention only:
-`null` leaks, statics accumulate, getters expose state, and inheritance
-couples everything to everything. Code reviews catch some of it.
-Discipline catches a bit more. The rest ships.
+Sixty years after Simula, most "object-oriented" code is procedural
+code wearing class syntax: anemic data bags shuttled between static
+service layers. Every discipline we invented to contain the damage —
+code reviews, linters, style guides — is optional, and optional
+disciplines erode under deadline pressure. The result is familiar:
+NullPointerExceptions in production, god classes nobody dares touch,
+tests that mock half the universe.
 
-PureO takes a different route: it makes the violations inexpressible.
-The [Elegant Objects](https://www.elegantobjects.org) principles are
-not guidelines here — they are the grammar.
+## The idea
 
-```pureo
-interface Money {
-  plus(other: Money): Money
-  printed(): Text
-}
+Object thinking, as articulated by Elegant Objects, is a small set of
+refusals — each one aimed at a specific, well-known wound.
 
-object UsdMoney(amount: Decimal): Money {
-  new(cents: Int) = UsdMoney(Decimal.of(cents, 2))
-  plus(other: Money): Money = UsdMoney(amount.plus(other.decimal()))
-  printed(): Text = Formatted("$%s", amount)
-}
-```
+**Objects are immutable.** An object that changes state is an object
+whose identity lies: what you tested a moment ago is not what you hold
+now. Immutability makes reasoning local and concurrency trivial —
+nothing shared can be corrupted, because nothing shared can change.
 
-## What the compiler rejects
+**There is no null.** A `null` is absence pretending to be a value;
+it compiles everywhere and explodes somewhere else. In object
+thinking, absence is an object too — one that answers questions
+instead of throwing them.
 
-- `null` — absence is explicit, always
-- Static methods and utility classes
-- Getters, setters, and any mutable state
-- Implementation inheritance — composition and decoration only
-- `instanceof`, casts, and reflection
-- Code in constructors — they bind attributes, nothing else
+**There are no statics.** A static method is a procedure: it denies
+the object, cannot be decorated, and hardwires its dependencies into
+every caller. Utility classes are where object thinking goes to die.
 
-## What you keep
+**Composition, never inheritance.** Implementation inheritance
+couples every descendant to its ancestor's insides; one change up the
+chain ripples down forever. Decoration reuses behavior without owning
+it — you wrap an object, you don't become it.
 
-- The JVM: PureO transpiles to plain final Java classes, consumable
-  from any Java project as an ordinary JAR
-- Java libraries: reachable through an explicit, greppable interop
-  construct that types every Java return value as nullable
-- A familiar syntax: if you read Java or Kotlin, you read PureO
+**Constructors only bind.** A constructor that computes, validates,
+or touches the network is doing work before the object exists.
+Construction is naming collaborators; everything else is behavior,
+and behavior belongs in methods.
 
-## Relation to EO
+**Fail fast.** Defensive code hides bugs far from where they were
+born, then hands the debugger a corpse with no witnesses. Failing
+immediately, loudly, at the first broken expectation is a courtesy to
+whoever maintains the code next — usually you.
 
-PureO is the industrial sibling of [EO](https://github.com/objectionary/eo),
-the research language by Yegor Bugayenko that explores object thinking
-through φ-calculus. EO proves the ideas; PureO packages them in a
-syntax your team already knows.
+## Why a language
+
+You can follow these principles in Java today — until the first
+hurried Friday commit. Conventions decay; grammars do not. That is
+why we are building [PureO](https://github.com/pure-objects/pureo):
+a JVM language where these principles are not reviewed, they are
+parsed. It compiles to plain Java classes any project can consume;
+the pitch, the syntax, and the specification live in the repository.
+
+## Lineage
+
+None of this is ours. The principles come from Yegor Bugayenko's
+[Elegant Objects](https://www.elegantobjects.org), and the proof that
+a language can be built on pure composition comes from the
+[EO](https://github.com/objectionary/eo) research project. Our
+contribution is industrial: the same radicalism, in a syntax working
+teams already read.
 
 ## Repositories
 
@@ -61,6 +75,6 @@ syntax your team already knows.
 ## Status
 
 Early days: the [specification](https://github.com/pure-objects/pureo/blob/master/SPECIFICATION.md)
-is at v0.1 and the compiler is being built in public. Star the repo,
-read the spec, and open an issue to disagree with a design decision —
-that is exactly what this phase is for.
+is at v0.1 and the compiler is being built in public. If you have
+practiced object thinking and hit the walls of mainstream languages,
+open an issue and argue with us — dissent is the point of this phase.
