@@ -1,3 +1,8 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/pure-objects/pureo/master/assets/svg/logo-dark.svg">
+  <img src="https://raw.githubusercontent.com/pure-objects/pureo/master/assets/svg/logo-light.svg" height="56" alt="PureO">
+</picture>
+
 # PureO
 
 **A JVM language where the compiler enforces object thinking.**
