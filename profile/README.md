@@ -1,9 +1,10 @@
 # Pure Objects
 
-An organization dedicated to one idea: object-oriented programming,
-taken seriously. We build the tools — starting with the PureO
-language — that make object thinking structurally enforceable
-instead of merely encouraged.
+An organization dedicated to one idea: object programming — not
+object-*oriented* programming. An orientation is a direction you are
+free to drift from, and mainstream languages let you. We build the
+tools — starting with the PureO language — where objects are not the
+recommended style but the only grammar.
 
 ## The problem
 
@@ -13,7 +14,8 @@ service layers. Every discipline we invented to contain the damage —
 code reviews, linters, style guides — is optional, and optional
 disciplines erode under deadline pressure. The result is familiar:
 NullPointerExceptions in production, god classes nobody dares touch,
-tests that mock half the universe.
+tests that mock half the universe. The word "oriented" was the
+loophole all along: it promised a direction, never a destination.
 
 ## The idea
 
